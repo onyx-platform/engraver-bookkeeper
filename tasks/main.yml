@@ -48,7 +48,7 @@
 
 - name: Run the BookKeeper container
   docker:
-    name: bookkeeper
+    name: "{{ container_name }}"
     image: "{{ bookkeeper_docker_image }}"
     net: host
     detach: yes
