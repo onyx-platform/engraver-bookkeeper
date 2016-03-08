@@ -19,7 +19,7 @@
 
 - name: Move the bkenv file to the host
   template:
-    src: templates/bk_server.conf
+    src: templates/bkenv.sh
     dest: "{{ bookkeeper_config_dir }}/bkenv.sh"
     owner: "{{ remote_user }}"
     group: "{{ remote_user }}"
