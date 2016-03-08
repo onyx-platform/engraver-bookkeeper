@@ -1,0 +1,4 @@
+---
+bookkeeper_docker_image: michaeldrogalis/bookkeeper:0.1.0
+bookkeeper_config_dir: /srv/bookkeeper
+bookie_port: 3181

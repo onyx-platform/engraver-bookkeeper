@@ -1,0 +1,57 @@
+---
+- name: Create the directory for the BookKeeper config files
+  file:
+    path: "{{ bookkeeper_config_dir }}"
+    state: directory
+    mode: 0755
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    recurse: yes
+  become: yes
+
+- name: Move the bk_server file to the host
+  template:
+    src: templates/bk_server.conf.j2
+    dest: "{{ bookkeeper_config_dir }}/bk_server.conf"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    mode: 0555
+
+- name: Move the bkenv file to the host
+  template:
+    src: templates/bk_server.conf
+    dest: "{{ bookkeeper_config_dir }}/bkenv.sh"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    mode: 0555
+
+- name: Move the log4j properties file to the host
+  template:
+    src: templates/log4j.properties
+    dest: "{{ bookkeeper_config_dir }}/log4j.properties"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    mode: 0555
+
+- name: Move the log4j shell file to the host
+  template:
+    src: templates/log4j.shell.properties
+    dest: "{{ bookkeeper_config_dir }}/log4j.shell.properties"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    mode: 0555
+
+- name: Run the BookKeeper container
+  docker:
+    name: bookkeeper
+    image: "{{ bookkeeper_docker_image }}"
+    net: host
+    detach: yes
+    state: reloaded
+    restart_policy: always
+    restart_policy_retry: 128
+    volumes:
+      - "{{ bookkeeper_config_dir }}:/bookkeeper-server-4.3.2/conf"
+
+- name: Wait for Bookie server to come up
+  wait_for: port="{{ bookie_port }}" delay=0 timeout=60
