@@ -1,8 +1,8 @@
 ---
 - name: Update hosts file
-  lineinfile: dest=/etc/hosts line="127.0.0.1 {{ec2_tag_Name}}"
+  lineinfile: dest=/etc/hosts line="127.0.0.1 {{ ansible_hostname }}"
               insertafter="^127\.0\.0\.1 localhost.*$"
-  when: ec2_tag_Name is defined
+  become: yes
 
 - name: Create the directory for the BookKeeper config files
   file:
