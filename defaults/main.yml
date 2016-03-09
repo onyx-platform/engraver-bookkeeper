@@ -11,3 +11,6 @@ service_security_rules:
     from_port: "{{ bookie_host_port }}"
     to_port: "{{ bookie_host_port }}"
     cidr_ip: "{{ onyx_subnet }}"
+
+service_dependencies:
+  - zookeeper
