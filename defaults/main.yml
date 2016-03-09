@@ -6,5 +6,8 @@ bookkeeper_config_dir: /srv/bookkeeper
 bookie_container_port: 3181
 bookie_host_port: 3181
 
-service_ports:
-  - "{{ bookie_host_port }}"
+service_security_rules:
+  - proto: tcp
+    from_port: "{{ bookie_host_port }}"
+    to_port: "{{ bookie_host_port }}"
+    cidr_ip: "0.0.0.0/0"
