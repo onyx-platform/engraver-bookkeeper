@@ -50,18 +50,19 @@
   docker:
     name: "{{ container_name }}"
     image: "{{ bookkeeper_docker_image }}"
-    net: host
     detach: yes
     state: reloaded
     restart_policy: always
     restart_policy_retry: 128
     volumes:
       - "{{ bookkeeper_config_dir }}:/bookkeeper-server-4.3.2/conf"
+    ports:
+      - "{{ bookie_host_port }}:{{ bookie_container_port }}"
 
 - name: Wait for Bookie server to come up
   wait_for:
     host: "{{ inventory_hostname }}"
-    port: "{{ bookie_port }}"
+    port: "{{ bookie_host_port }}"
     delay: 0
     timeout: 60
   delegate_to: "{{ item }}"
