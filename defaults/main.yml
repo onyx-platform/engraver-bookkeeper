@@ -10,4 +10,4 @@ service_security_rules:
   - proto: tcp
     from_port: "{{ bookie_host_port }}"
     to_port: "{{ bookie_host_port }}"
-    cidr_ip: "0.0.0.0/0"
+    cidr_ip: "{{ onyx_subnet }}"
