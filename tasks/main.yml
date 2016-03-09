@@ -58,6 +58,8 @@
       - "{{ bookkeeper_config_dir }}:/bookkeeper-server-4.3.2/conf"
     ports:
       - "{{ bookie_host_port }}:{{ bookie_container_port }}"
+    expose:
+      - "{{ bookie_container_port }}"
 
 - name: Wait for Bookie server to come up
   wait_for:
