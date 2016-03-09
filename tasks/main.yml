@@ -48,7 +48,7 @@
 
 - name: Run the BookKeeper container
   docker:
-    name: "{{ container_name }}"
+    name: "{{ bookkeeper_container_name }}"
     image: "{{ bookkeeper_docker_image }}"
     detach: yes
     state: reloaded
